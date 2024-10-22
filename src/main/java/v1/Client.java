@@ -28,6 +28,22 @@ public class Client {
             log.info("client start");
             log.info("listening port : " + PORT);
 
+            //메시지 수신을 위한 별도의 스레드 생성
+            new Thread(() -> {
+                try {
+                    while (true) {
+
+                        String receivedMessage = in.readUTF();
+                        log.info("received message : " + receivedMessage);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }).start();
+
+            //메인 스레드 사용자 입력 처리
             Scanner sc = new Scanner(System.in);
             String sender = null;
             while (true) {
@@ -38,9 +54,6 @@ public class Client {
                 if(sendMsg.equals("exit")) {
                     break;
                 }
-
-                String receiveMsg = in.readUTF();
-                log.info("receiveUser(" + sender + ") :" + receiveMsg);
 
             }
 
