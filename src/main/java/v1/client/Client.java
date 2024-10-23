@@ -33,7 +33,7 @@ public class Client {
                     while (true) {
 
                         String receivedMessage = in.readUTF();
-                        log.info("received message : " + receivedMessage);
+                        log.info(receivedMessage);
 
                     }
                 } catch (IOException e) {
@@ -46,7 +46,6 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             String sender = null;
             while (true) {
-                System.out.println("user 1 : ");
                 String sendMsg = sc.nextLine();
                 out.writeUTF(sendMsg);
 
