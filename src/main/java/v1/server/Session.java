@@ -1,7 +1,8 @@
-package v1;
+package v1.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import v1.server.command.CommandManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,12 +18,15 @@ public class Session implements Runnable {
     private final DataInputStream dataInputStream;
     private final DataOutputStream dataOutputStream;
     private final boolean closed = false;
+    private User user;
+    private final CommandManager commandManager;
 
     public Session(Socket socket, SessionManager sessionManager) throws IOException {
         this.socket = socket;
         this.sessionManager = sessionManager;
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.commandManager = new CommandManager();
     }
 
     @Override
@@ -35,9 +39,21 @@ public class Session implements Runnable {
                 if(receivedMsg.equals("exit")){
                     break;
                 }
-                //뿌리기
+                System.out.println("1");
 
-                sessionManager.broadcast(receivedMsg);
+
+                if (commandManager.executeCommand(this, receivedMsg)) {
+                    System.out.println("2");
+                    continue;
+                }
+
+                if(user == null){
+                    System.out.println("3");
+                    sendMessage("당인의 이름을 `/join | {name}` 명령어로 설정 하세요");
+                    continue;
+                }
+                //뿌리기
+                sessionManager.broadcast(user.getName() + " : " + receivedMsg);
 
             }
         } catch (IOException e) {
@@ -52,12 +68,17 @@ public class Session implements Runnable {
         dataOutputStream.writeUTF(message);
     }
 
-
     public synchronized void close(){
 
         if(closed) return;
         new SocketCloseUtil().closeAll(socket,dataInputStream,dataOutputStream);
         log.info("Session closed complete");
 
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public SessionManager getSessionManager() {
+        return sessionManager;
     }
 }

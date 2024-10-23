@@ -1,4 +1,4 @@
-package v1;
+package v1.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package v1;
+package v1.client;
 
 
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -34,7 +33,7 @@ public class Client {
                     while (true) {
 
                         String receivedMessage = in.readUTF();
-                        log.info("received message : " + receivedMessage);
+                        log.info(receivedMessage);
 
                     }
                 } catch (IOException e) {
@@ -47,7 +46,6 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             String sender = null;
             while (true) {
-                System.out.println("user 1 : ");
                 String sendMsg = sc.nextLine();
                 out.writeUTF(sendMsg);
 
