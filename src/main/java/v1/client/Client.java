@@ -1,4 +1,4 @@
-package v1;
+package v1.client;
 
 
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
