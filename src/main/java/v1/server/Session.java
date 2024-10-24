@@ -39,16 +39,12 @@ public class Session implements Runnable {
                 if(receivedMsg.equals("exit")){
                     break;
                 }
-                System.out.println("1");
-
 
                 if (commandManager.executeCommand(this, receivedMsg)) {
-                    System.out.println("2");
                     continue;
                 }
 
                 if(user == null){
-                    System.out.println("3");
                     sendMessage("당인의 이름을 `/join | {name}` 명령어로 설정 하세요");
                     continue;
                 }
