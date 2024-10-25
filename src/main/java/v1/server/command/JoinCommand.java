@@ -26,13 +26,6 @@ public class JoinCommand implements Command {
 
     }
 
-    private void sendInvalidCommandMessage(Session session) {
-        try {
-            session.sendMessage("명령어가 유효하지 않습니다 '/join | {name}' 명령어가 맞는지 다시 확인해 주세요");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public String getCommandName() {
